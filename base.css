@@ -7,12 +7,106 @@
     --s4: rgb(236, 223, 204);
 }
 
+a {
+    all: unset;
+}
+
 body {
-    background-color: var(--s4);
-    color: var(--s2);
+    margin: 0;
+    cursor: default;
+    background: var(--s4);
     font-family: 'Metropolis', sans-serif;
+    letter-spacing: 0.3px;
+    color: var(--s1);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#trunk {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+}
+
+#thorax {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px;
+    width: 160px;
+    background: var(--s1);
+}
+
+#stamp {
+    fill: var(--s3);
+    height: 60px;
+    -webkit-user-drag: none;
+    user-drag: none; 
+}
+
+#abdomen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu {
+    pointer-events: none;
+    width: 160px;
+    font-size: 20px;
+}
+
+#menu:hover .item:not(:hover) {
+    -webkit-filter: blur(0.6px);
+    -moz-filter: blur(0.6px);
+    -o-filter: blur(0.6px);
+    -ms-filter: blur(0.6px);
+    filter: blur(0.6px);
+    color: var(--s2);
+}
+
+.item {
+    pointer-events: auto;
+    transition: 0.2s;
+    padding: 4px 0;
+    padding-left: 16px;
+}
+
+.item:hover {
+    padding-left: 24px;
 }
 
 #foot {
-    font-weight: bold;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50px);
+    font-size: 14px;
+}
+
+#tarsus {
+    text-align: center;
+    padding-bottom: 6px;
+}
+
+#tarsus > a {
+    transition: 0.2s;
+    font-size: 16px;
+}
+
+#tarsus a:first-child:hover {
+    color: #1877F2
+}
+
+#tarsus a:nth-child(2):hover {
+    color: #D62976
+}
+
+#tarsus a:last-child:hover {
+    color: #08872B
 }
