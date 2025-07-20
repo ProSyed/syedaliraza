@@ -1,16 +1,27 @@
-@import url('https://fonts.cdnfonts.com/css/metropolis-2');
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Metropolis'), url('fonts/Metropolis-Thin.woff') format('woff');
+}
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: normal;
+  src: local('FontAwesome'), url('fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2');
+}
 
 :root {
     --s1: rgb(24, 28, 20);
     --s2: rgb(60, 61, 55);
     --s3: rgb(106, 117, 101);
     --s4: rgb(236, 223, 204);
+    --unit: 160px;
 }
 
 a {
     all: unset;
 }
-
 body {
     margin: 0;
     cursor: default;
@@ -25,42 +36,93 @@ body {
 }
 
 #trunk {
-    display: flex;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 320px;
+    width: calc(2 * var(--unit));
+    height: var(--unit);
 }
-
 #thorax {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 160px;
-    width: 160px;
+    width: var(--unit);
+    height: var(--unit);
     background: var(--s1);
+}
+@keyframes abdomenLoad {
+    0% { left: 0; opacity: 0 }
+    100% { left: var(--unit); opacity: 1; }
+}
+#abdomen {
+    animation: 0.5s ease-out 0.5s abdomenLoad forwards;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--unit);
+    height: var(--unit);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
 }
 
 #stamp {
-    fill: var(--s3);
     height: 60px;
     -webkit-user-drag: none;
     user-drag: none; 
 }
-
-#abdomen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.stroke { 
+    stroke: var(--s3);
+    stroke-width: 21;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+@keyframes write {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+#stroke-syed-main {
+    stroke-dasharray: 379;
+    stroke-dashoffset: 379;
+    animation: write 0.9s ease-in forwards;
+}
+#stroke-syed-dash {
+    stroke-dasharray: 45;
+    stroke-dashoffset: 45;
+    animation: write 0.15s ease-in forwards 1.5s;
+}
+#stroke-ali {
+    stroke-dasharray: 1320;
+    stroke-dashoffset: 1320;
+    animation: write 1.6s ease-in forwards;
+}
+#stroke-raza-pre {
+    stroke-dasharray: 109;
+    stroke-dashoffset: 109;
+    animation: write 0.25s ease-in forwards;
+}
+#stroke-raza-post {
+    stroke-dasharray: 388;
+    stroke-dashoffset: 388;
+    animation: write 0.65s ease-in forwards 0.25s;
+}
+#stroke-raza-dash {
+    stroke-dasharray: 23;
+    stroke-dashoffset: 23;
+    animation: write 0.09s ease-in forwards 1.5s;
 }
 
 #menu {
     pointer-events: none;
-    width: 160px;
+    width: var(--unit);
     font-size: 20px;
 }
-
 #menu:hover .item:not(:hover) {
     -webkit-filter: blur(0.6px);
     -moz-filter: blur(0.6px);
@@ -76,7 +138,6 @@ body {
     padding: 4px 0;
     padding-left: 16px;
 }
-
 .item:hover {
     padding-left: 24px;
 }
@@ -93,20 +154,41 @@ body {
     text-align: center;
     padding-bottom: 6px;
 }
-
 #tarsus > a {
     transition: 0.2s;
     font-size: 16px;
 }
-
 #tarsus a:first-child:hover {
     color: #1877F2
 }
-
 #tarsus a:nth-child(2):hover {
     color: #D62976
 }
-
 #tarsus a:last-child:hover {
     color: #08872B
+}
+
+#phalanx a {
+    transition: 0.2s;
+}
+#phalanx a:hover {
+    color: var(--s3);
+}
+
+.icon {
+    display: inline-block;
+    font: normal normal normal 14px/1 'FontAwesome';
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.facebook:before {
+    content: "\f082";
+}
+.instagram:before {
+    content: "\f16d";
+}
+.github:before {
+    content: "\f092";
 }
