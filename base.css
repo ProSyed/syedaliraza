@@ -24,6 +24,8 @@ a {
 }
 body {
     margin: 0;
+    height: 100%;
+    overflow: hidden;
     cursor: default;
     background: var(--s4);
     font-family: 'Metropolis', sans-serif;
@@ -124,17 +126,12 @@ body {
     font-size: 20px;
 }
 #menu:hover .item:not(:hover) {
-    -webkit-filter: blur(0.6px);
-    -moz-filter: blur(0.6px);
-    -o-filter: blur(0.6px);
-    -ms-filter: blur(0.6px);
-    filter: blur(0.6px);
-    color: var(--s2);
+    opacity: 0.4;
 }
 
 .item {
     pointer-events: auto;
-    transition: 0.2s;
+    transition: 0.3s;
     padding: 4px 0;
     padding-left: 16px;
 }
@@ -142,11 +139,16 @@ body {
     padding-left: 24px;
 }
 
+@keyframes footLoad {
+    0% { transform: translate(-50%, 0); }
+    100% { transform: translate(-50%, -55px); }
+}
 #foot {
+    animation: 0.5s ease-out 0.5s footLoad forwards;
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translate(-50%, -50px);
+    transform: translate(-50%, 0);
     font-size: 14px;
 }
 
