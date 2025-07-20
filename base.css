@@ -74,7 +74,7 @@ body {
 }
 
 #stamp {
-    height: 60px;
+    height: calc(var(--unit) / 2.8);
     -webkit-user-drag: none;
     user-drag: none; 
 }
@@ -141,9 +141,10 @@ body {
 
 @keyframes footLoad {
     0% { transform: translate(-50%, 0); }
-    100% { transform: translate(-50%, -55px); }
+    100% { transform: translate(-50%, -50px); }
 }
 #foot {
+    width: 100%;
     animation: 0.5s ease-out 0.5s footLoad forwards;
     position: absolute;
     top: 100%;
@@ -170,6 +171,9 @@ body {
     color: #08872B
 }
 
+#phalanx {
+    text-align: center;
+}
 #phalanx a {
     transition: 0.2s;
 }
@@ -193,4 +197,16 @@ body {
 }
 .github:before {
     content: "\f092";
+}
+
+@media only screen and (max-width: 340px) {
+    :root {
+        --unit: 140px;
+    }
+    #menu {
+        font-size: 18px;
+    }
+    .item {
+        padding-left: 14px;
+    }
 }
