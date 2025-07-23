@@ -9,6 +9,11 @@ var valve = document.getElementById("valve");
 var back = document.getElementById("back");
 
 function loadWindow() {
+    if (document.fonts.ready) {
+        document.fonts.ready.then(() => {
+            document.body.style.display = 'block';
+        });
+    }
     Object.keys(qua).forEach(member => {
         const item = document.createElement("div");
         item.classList.add('item');
