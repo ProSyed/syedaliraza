@@ -8,12 +8,13 @@ var heartTran = 0;
 var valve = document.getElementById("valve");
 var back = document.getElementById("back");
 
-function loadWindow() {
-    if (document.fonts.ready) {
-        document.fonts.ready.then(() => {
-            document.body.style.display = 'block';
-        });
+async function loadWindow() {
+    var preFont = new Date();
+    for (let font of document.fonts) {
+        await document.fonts.load(`${font.style} ${font.weight} 1em ${font.family}`);
     }
+    console.log(`Font Load: ${new Date() - preFont}ms`);
+    document.body.style.display = 'block';
     Object.keys(qua).forEach(member => {
         const item = document.createElement("div");
         item.classList.add('item');
