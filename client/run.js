@@ -10,6 +10,7 @@ var heart = document.getElementById("heart");
 var heartTran = 0;
 var valve = document.getElementById("valve");
 var back = document.getElementById("back");
+var copyright = document.getElementById("copyright");
 var secret = 0;
 var secretTimer = null;
 
@@ -91,7 +92,7 @@ function clickSecret() {
         secretTimer = null;
     }, 1000);
     if (secret === 5) {
-        window.location.href = "panel";
+        copyright.href = "panel";
         secret = 0;
         clearTimeout(secretTimer);
         secretTimer = null;

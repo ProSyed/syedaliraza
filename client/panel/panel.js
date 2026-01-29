@@ -1,5 +1,6 @@
 var throbbers = document.getElementsByClassName("throbber");
 
+var decrypts = document.getElementsByClassName("decrypt");
 var hours = document.getElementsByClassName("hour");
 var refreshes = document.getElementsByClassName("refresh");
 var exits = document.getElementsByClassName("exit");
@@ -14,8 +15,6 @@ var viewerCurrent = document.getElementById("viewer-current");
 const pullUrl = "/.netlify/functions/githubPull?path=";
 
 async function loadPanel() {
-    corkboard.innerHTML = cork;
-    throbbers[0].style.display = 'none';
     await pull(false, "/");
     throbbers[1].style.display = 'none';
 }
@@ -72,7 +71,15 @@ function fillViewer(path, contents) {
     hljs.highlightElement(viewer);
 }
 
+async function corkDecryption() {
+    const password = prompt("Only the chosen key may awaken the rune:");
+    const decryptedCork = await decrypt(encryptedCork, password);
+    corkboard.innerHTML = decryptedCork;
+    throbbers[0].style.display = "none"
+}
+
 window.addEventListener("load", loadPanel);
+decrypts[0].addEventListener("click", corkDecryption);
 refreshes[0].addEventListener("click", () => pull(false, document.querySelector(".current td").innerHTML));
 refreshes[1].addEventListener("click", () => pull(true, viewerCurrent.innerHTML));
 exits[0].addEventListener("click", () => {
