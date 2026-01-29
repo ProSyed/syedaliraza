@@ -31,33 +31,28 @@ export async function handler(event) {
         };
     }
         
-    let { session_id, agent_id, timestamp, url, referrer, init = true } = body;
+    let { session_id, agent_id, timestamp, type, details, page } = body;
 
-    if (!session_id || !agent_id || !timestamp) {
+    if (!session_id || !agent_id || !timestamp || !type) {
         return {
             statusCode: 400,
             headers: {"Access-Control-Allow-Origin": "*"},
-            body: "POST body must have session_id, agent_id and timestamp"
+            body: "POST body must have session_id, agent_id, type and timestamp"
         };
     };
     
     timestamp = new Date(timestamp).toISOString();
     
-    const xf = event.headers['x-forwarded-for'];
-    let query;
-    if (init){
-        let values = {
-            id: quote(session_id),
-            agent_id: quote(agent_id),
-            started_at: quote(timestamp),
-                ...(url && { entry_url: quote(url) }),
-                ...(referrer && { referrer: quote(referrer) }),
-                ...(xf && { ip: quote(xf) })
-        }
-        values = Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined));
-        query = `INSERT into sessions (${Object.keys(values).join(", ")}) VALUES (${Object.values(values).join(", ")}) ON CONFLICT DO NOTHING`;
+    let values = {
+        agent_id: quote(agent_id),
+        session_id: quote(session_id),
+        type: quote(type),
+        timestamp: quote(timestamp),
+            ...(details && { details: quote(details) }),
+            ...(page && { page: quote(page) })
     }
-    else query = `UPDATE sessions SET ended_at = ${quote(timestamp)}${url ? `, exit_url = ${quote(url)}` : ""} WHERE id = ${quote(session_id)}`
+    
+    const query = `INSERT into events (${Object.keys(values).join(", ")}) VALUES (${Object.values(values).join(", ")})`;
     const sql = neon(database);
     try {
         await sql.query(query);

@@ -37,6 +37,17 @@ export default async function initAgent(agentKey, agentFunction) {
         cpu_cores: navigator.hardwareConcurrency || null
     };
     
-    navigator.sendBeacon(agentFunction, JSON.stringify(payload));
+    const response = await fetch(agentFunction, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Agent POST failed:', errorData);
+        return null;
+    }
     return agentId;
 }

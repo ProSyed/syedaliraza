@@ -11,7 +11,18 @@ export default async function initSession(agentId, sessionKey, sessionFunction) 
         sessionStorage.setItem(sessionKey, sessionId);
         payload.session_id = sessionId;
         payload.timestamp = Date.now();
-        navigator.sendBeacon(sessionFunction, JSON.stringify(payload));
+        const response = await fetch(sessionFunction, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Session POST failed:', errorData);
+            return null;
+        }
     }
     window.addEventListener("pagehide", (event) => {
         sessionStorage.removeItem(sessionKey);
